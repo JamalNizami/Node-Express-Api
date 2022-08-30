@@ -88,11 +88,15 @@ const loginUser = asyncHandler( async(req,res) => {
 //@desc    Get User data
 //@route   get /api/users/me
 //@access  Public
-const getMe = (req,res) => {
-    res.json({
-        Message: 'User data is here'
+const getMe = asyncHandler( async(req,res) => {
+    const {_id , email , name} = await User.findById(req.user.id)
+    
+    res.status(200).json({
+        id : _id,
+        name : name,
+        email : email
     })
-}
+})
 
 
 const generateToken = (id) => {
